@@ -5,7 +5,7 @@ import logging
 import hashlib
 import json
 
-import ipfsApi
+import ipfsapi
 import fastimport.commands
 
 import git_remote_ipfs.marks
@@ -65,7 +65,7 @@ class IPFSRemote (object):
             host = 'localhost'
             port = 5001
 
-        self.api = ipfsApi.Client(host=host, port=port)
+        self.api = ipfsapi.Client(host=host, port=port)
 
         # fail quickly if we're not able to contact ipfs
         self.id = self.api.id()
@@ -107,7 +107,7 @@ class IPFSRemote (object):
         self.refresh()
 
     def refresh(self):
-        self.repo = self.api.cat(self.path)
+        self.repo = json.loads(self.api.cat(self.path))
         self.repo_check_version()
         self.repo_discover_refs()
 
@@ -146,9 +146,10 @@ class IPFSRemote (object):
 
         LOG.warn('new repository hash = %s', self.repo)
 
-        if self.path.startswith('/ipns/%s' % self.id['ID']):
-            LOG.info('publishing new hash to %s', self.path)
-            self.api.name_publish(self.repo)
+        if self.path:
+            if self.path.startswith('/ipns/%s' % self.id['ID']):
+                LOG.info('publishing new hash to %s', self.path)
+                self.api.name_publish(self.repo)
 
     def commit(self):
         LOG.debug('committing repository to disk')

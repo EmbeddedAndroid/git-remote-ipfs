@@ -1,2 +1,2 @@
 fastimport
-ipfs-api
+ipfsapi
