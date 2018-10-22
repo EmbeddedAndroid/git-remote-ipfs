@@ -10,7 +10,7 @@ publishing multiple names via ipns.
 
 You can install this module directly using `pip`, like this:
 
-    pip install git+https://github.com/larsks/git-remote-ipfs
+    pip install git+https://github.com/EmbeddedAndroid/git-remote-ipfs
 
 You can of course also clone it and run `setup.py` instead.
 
