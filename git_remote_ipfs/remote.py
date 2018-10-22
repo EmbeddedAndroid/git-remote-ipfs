@@ -15,6 +15,8 @@ LOG = logging.getLogger(__name__)
 
 repo_format_version = 2
 
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 def quote_filename(f):
     return '"%s"' % f.replace('"', '\\"')
@@ -186,6 +188,7 @@ class IPFSRemote (object):
                 fspec.dataref = self.marks.from_mark(fspec.dataref)
 
         merges = []
+        parents = []
         for parent in commit.merges:
             parents.append(self.marks.from_mark(parent))
 
